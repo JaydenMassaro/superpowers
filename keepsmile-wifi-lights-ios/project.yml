@@ -2,7 +2,7 @@ name: KeepsmileLights
 options:
   bundleIdPrefix: com.example
   deploymentTarget:
-    iOS: "16.0"
+    iOS: "16.1"
 targets:
   KeepsmileLights:
     type: application

@@ -1,0 +1,33 @@
+name: Build Keepsmile Lights iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/keepsmile-wifi-lights-xxkkj6]
+    paths: ['keepsmile-wifi-lights-ios/**', '.github/workflows/keepsmile-ios-ipa.yml']
+
+jobs:
+  build:
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: keepsmile-wifi-lights-ios
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen
+      # Unsigned build: Sideloadly / AltStore re-sign it with your Apple ID when installing.
+      - name: Build
+        run: |
+          xcodebuild -project KeepsmileLights.xcodeproj -scheme KeepsmileLights \
+            -configuration Release -sdk iphoneos -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+      - name: Package IPA
+        run: |
+          mkdir Payload
+          cp -R build/Build/Products/Release-iphoneos/KeepsmileLights.app Payload/
+          zip -qr KeepsmileLights.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KeepsmileLights-ipa
+          path: keepsmile-wifi-lights-ios/KeepsmileLights.ipa
