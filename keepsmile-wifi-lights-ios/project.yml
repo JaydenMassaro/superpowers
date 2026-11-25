@@ -1,0 +1,27 @@
+name: KeepsmileLights
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  KeepsmileLights:
+    type: application
+    platform: iOS
+    sources: [KeepsmileLights]
+    settings:
+      base:
+        # Change this to something unique to you, e.g. com.yourname.keepsmilelights
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.keepsmilelights
+        SWIFT_VERSION: "5.0"
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+    info:
+      path: KeepsmileLights/Info.plist
+      properties:
+        CFBundleDisplayName: Keepsmile Lights
+        NSBluetoothAlwaysUsageDescription: Talks to your Keepsmile light over Bluetooth to turn it on or off.
+        UIBackgroundModes: [bluetooth-central]
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
